@@ -1,7 +1,8 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-	<title>hello</title>
+	<title>Python Flask Simple Shopping Cart</title>
 	<link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -36,14 +37,14 @@
 					{% set price = session['cart_item'][key]['price'] %}
 					{% set item_price = session['cart_item'][key]['total_price'] %}					
 					<tr>
-						<td>/static/images/{{ session['cart_item'][key]['image'] }}!<img src="/static/images/{{ session['cart_item'][key]['image'] }}" class="cart-item-image" />{{ session['cart_item'][key]['name'] }}</td>
+						<td><img src="/static/images/{{ session['cart_item'][key]['image'] }}" class="cart-item-image" />{{ session['cart_item'][key]['name'] }}</td>
 						<td>{{ session['cart_item'][key]['code'] }}</td>
 						<td style="text-align:right;">{{ quantity }}</td>
 						<td  style="text-align:right;">&#8377; {{ price }}</td>
 						<td  style="text-align:right;">&#8377; {{ item_price }}</td>
 						<td style="text-align:center;">
 							<a href="{{ url_for('.delete_product', code=session['cart_item'][key]['code']) }}" class="btnRemoveAction">
-								LINE46<img src="/static/images/icon-delete.png" alt="Remove Item" />
+								<img src="/static/images/icon-delete.png" alt="Remove Item" />
 							</a>
 						</td>
 					</tr>
@@ -68,7 +69,7 @@
 
 			<div class="product-item">
 				<form method="post" action="/add">
-					<div class="product-image">/static/images/{{ product.image }}<img src="/static/images/{{ product.image }}"></div>
+					<div class="product-image"><img src="/static/images/{{ product.image }}"></div>
 					<div class="product-tile-footer">
 						<div class="product-title">{{ product.name }}</div>
 						<div class="product-price">&#8377; {{ product.price }}</div>
