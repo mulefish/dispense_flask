@@ -9,7 +9,7 @@ def clean_up():
 	conn = mysql.connect()
 	cursor = conn.cursor(pymysql.cursors.DictCursor)
 	cursor.execute("drop table if exists flower;")
-	cursor.execute("drop table if exists flower2;")
+	cursor.execute("drop table if exists pre_rolls;")
 
 def flower():
     log("flower")
@@ -32,6 +32,48 @@ def flower():
     """
     cursor.execute(sql)
 
+
+
+def pre_rolls():
+    log("pre_rolls")
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+    sql = """
+    CREATE TABLE pre_rolls (
+    id MEDIUMINT NOT NULL AUTO_INCREMENT,
+    brand varchar(255) not null, 
+    type varchar(255) not null, 
+    strain varchar(255) not null, 
+    number_of_joints int(4) not null, 
+    thc_percent decimal(4,2) not null, 
+    cbd_percent decimal(4,2) not null, 
+    harvest varchar(10) not null, 
+    description varchar(255) not null, 
+    price decimal(4,2) not null, 
+    PRIMARY KEY (id)
+    );
+    """
+    cursor.execute(sql)
+
+
+
+def pre_rolls_populate():
+    log("pre_roll_populate")
+    conn = mysql.connect()
+    cursor = conn.cursor(pymysql.cursors.DictCursor)
+
+    x = "INSERT INTO pre_rolls (brand, type, strain, number_of_joints, thc_percent, cbd_percent, harvest, description, price ) VALUES "
+    ary = [
+        """("Estraweeda","Indica","Blue City Diesel",10, 19.3, 0.2,	"12/13/18","", 25)""",
+        """("Estraweeda","Sativa","Ken's Glue",10,	18.9,	0.03,	"8/8/18", "", 25 )"""
+
+    ]
+    for a in ary:
+        sql = "{}{}".format(x,a)
+        cursor.execute(sql)
+        # print(sql)
+        conn.commit()
+
 def flower_populate():
     log("flower_populate")
     conn = mysql.connect()
@@ -45,14 +87,10 @@ def flower_populate():
         """("OG KB","Indica","Makru Farms", 1.04,	25.03,	0.09,"10/21/19","Indoor/outdoor, terpenes",10.00)""",
         """("Lost Cause","Sativa","Trichome",	1.08,	22.06,	0,"10/31/19","Indoor/outdoor, terpenes",9.00 )"""    
     ]
-
-
-
-
     for a in ary:
         sql = "{}{}".format(x,a)
         cursor.execute(sql)
-        print(sql)
+        # print(sql)
         conn.commit()
 
 
@@ -60,3 +98,5 @@ if __name__ == "__main__":
     clean_up()
     flower()
     flower_populate()
+    pre_rolls()
+    pre_rolls_populate()
